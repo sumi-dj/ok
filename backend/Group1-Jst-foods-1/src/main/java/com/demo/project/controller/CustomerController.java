@@ -51,7 +51,7 @@ public class CustomerController {
 //	}
 	
 	@PostMapping
-	public Customer addCustomer(@RequestBody Customer customer)
+	public Customer addCustomer(@RequestBody Customer customer) throws CustomerAlreadyExists
 	{
 		return cs.create(customer);
 	}

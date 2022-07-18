@@ -10,6 +10,7 @@ import { CustomerRegistrationService } from '../custome-registration.service';
 export class CustomerRegistrationComponent implements OnInit {
   customerRegistrationForm: FormGroup;
   o: any;
+  value :any;
   constructor(private fb: FormBuilder, private crs: CustomerRegistrationService) {
     this.customerRegistrationForm = this.fb.group({
       id:[''],
@@ -24,25 +25,46 @@ export class CustomerRegistrationComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // fnSubmit() {
+  //   if(this.customerRegistrationForm.invalid){
+  //     console.log(this.customerRegistrationForm);
+      
+  //     alert('Customer valid details are required');
+  //     return;
+  //   }
+  //     this.o=this.crs.fnCreate(this.customerRegistrationForm.value).subscribe((data:any)=>{
+  //       console.log(data)
+  //       //  alert(this.customerRegistrationForm.id);
+  //         if(this.o!=null)
+  //       {  
+  //           alert("Sign-up successfull: You can login and Enjoy  ");
+  //         alert(`login with id ${data.id}`);
+  //         localStorage.setItem('userdetails', JSON.stringify(data))
+          
+  //         }
+      
+  //     });
+    
+  // }
   fnSubmit() {
     if(this.customerRegistrationForm.invalid){
       console.log(this.customerRegistrationForm);
-      
       alert('Customer valid details are required');
       return;
     }
-      this.o=this.crs.fnCreate(this.customerRegistrationForm.value).subscribe((data:any)=>{
-        console.log(data)
-        //  alert(this.customerRegistrationForm.id);
-          if(this.o!=null)
-        {  
-            alert("Sign-up successfull: You can login and Enjoy  ");
-          alert(`login with id ${data.id}`);
-          localStorage.setItem('userdetails', JSON.stringify(data))
-    
+       this.o=this.crs.fnCreate(this.customerRegistrationForm.value).subscribe(data=>{
+        console.log(data);
+        this.value = data;
+        if(this.value.message == "email_already_exits"){
+          alert("Email is already used. Please use alternative email id.");
+        } else if(this.o!=null){
+
+          alert("Sign-up successfull: You can login and Enjoy  ");
+          if(this.value.id){
+            alert(`login with id ${this.value.id}`);
           }
-      
-      });
-    
+          localStorage.setItem('userdetails', JSON.stringify(data));
+       }
+      })
   }
 }

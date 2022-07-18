@@ -13,6 +13,7 @@ export class ViewCartComponent implements OnInit {
 
   ngOnInit(): void {
     const userdetails = localStorage.getItem('userdetails') as string;
+    console.log(userdetails);
     const jsonData = JSON.parse(userdetails);
     console.log(jsonData);
     
