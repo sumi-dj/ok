@@ -18,7 +18,9 @@ import com.demo.project.entities.AuthRequest;
 import com.demo.project.entities.Customer;
 import com.demo.project.entities.Menu;
 import com.demo.project.exception.CustomerAlreadyExists;
+import com.demo.project.exception.CustomerLoginInvalid;
 import com.demo.project.exception.CustomerNotFoundException;
+import com.demo.project.exception.CustomerPaswInvalid;
 import com.demo.project.service.CustomerService;
 
 
@@ -68,7 +70,7 @@ public class CustomerController {
 		return cs.delete(id);
 	}
 	@PostMapping("/login")
-	public Customer validateLogin(@RequestBody AuthRequest authRequest)
+	public Customer validateLogin(@RequestBody AuthRequest authRequest) throws CustomerLoginInvalid,CustomerPaswInvalid
 	{
 		Integer id=authRequest.getId();
 		Customer x = findCustomerById(id); 
@@ -80,12 +82,19 @@ public class CustomerController {
 			{
 				//success
 				status=true;
+			} else {
+				throw new CustomerLoginInvalid("Password_wrong");
 			}
 		}
 		if(!status)
-		{
+		{	
 			x=null;
+			throw new CustomerPaswInvalid("loginid_is_invalid");
 		}
+		
+//		if(x.equals(null)) {
+//			throw new CustomerLoginInvalid("loginid_is_invalid");
+//		}
 		return x;
 	}
    

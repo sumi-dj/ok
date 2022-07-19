@@ -13,7 +13,20 @@ public ResponseEntity<ErrorMsg> customerAlredayExistsException(CustomerAlreadyEx
 ErrorMsg errorMsg=new ErrorMsg();
 errorMsg.setMessage(e.getMessage());
 return new ResponseEntity<ErrorMsg>(errorMsg,HttpStatus.OK);
+}
 
+@ExceptionHandler(CustomerLoginInvalid.class)
+public ResponseEntity<ErrorMsg> customerLoginInvalidException(CustomerLoginInvalid e) {
+ErrorMsg errorMsg=new ErrorMsg();
+errorMsg.setMessage(e.getMessage());
+return new ResponseEntity<ErrorMsg>(errorMsg,HttpStatus.OK);
+}
+
+@ExceptionHandler(CustomerPaswInvalid.class)
+public ResponseEntity<ErrorMsg> CustomerPaswInvalidException(CustomerPaswInvalid e) {
+ErrorMsg errorMsg=new ErrorMsg();
+errorMsg.setMessage(e.getMessage());
+return new ResponseEntity<ErrorMsg>(errorMsg,HttpStatus.OK);
 }
 
 }
